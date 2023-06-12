@@ -25,12 +25,11 @@
             <!-- table start here  -->
             <div class="container mt-3">
                 <h2>User Edit Page</h2>
-                <p>Combine .table-dark and .table-striped to create a dark, striped table:</p>
-@if($alert=Session::get("success"))
-<p class="text-success">{{$alert}}</p>
+                <p class="text-muted">Just put the new updated data and "press save!</p>
+                @if($alert=Session::get("success"))
+                <p class="text-success">{{$alert}}</p>
 
-
-@endif
+                @endif
                 <form action="/user/{{($edited_user->id)}}/update" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -72,7 +71,7 @@
                         </tbody>
 
                     </table>
-                    <div class="text-center d-block"> <button type="submit" class="btn btn-outline-dark">Submit Data</button></div>
+                    <div class="text-center d-block"> <button type="submit" class="btn btn-outline-dark">Save Data</button></div>
                 </form>
             </div>
 

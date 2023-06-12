@@ -25,7 +25,7 @@
             <!-- table start here  -->
             <div class="container mt-3">
                 <h2>Add an user</h2>
-                <p>You can add or delete any user when you want!</p>
+                <p class="text-muted">You can add or delete any user when you want!</p>
 @if($alert=Session::get("success"))
 <p class="text-success">{{$alert}}</p>
 
