@@ -28,12 +28,14 @@ class crud_controller extends Controller
             'address' => 'required',
             'images' => 'required|image:jpeg,jpg,png,gif'
         ]);
+        //check address already have or not
         $checkaddress = crud_opatration::where('address', $request->address)->first();
         if (isset($checkaddress)) {
+            //if address already set out database then show an errors
             return back()->with('error', 'This email address has already used');
         } else {
-        }
-        // form image data validate =========
+            //if address already not set out database then continue....
+            // form image data validate =========
         $imageName = time() . '.' . $request->images->extension();
         $request->images->move(public_path('images'), $imageName);
 
@@ -45,6 +47,8 @@ class crud_controller extends Controller
         // and save ==================
         $user->save();
         return back()->withSuccess("New user data was added!");
+        }
+
     }
 
     public function edit($id)
@@ -56,7 +60,6 @@ class crud_controller extends Controller
     public function update(Request $request, $id)
     {
         // form data validate ==============
-
         $request->validate([
             'name' => 'required',
             'address' => 'required',
