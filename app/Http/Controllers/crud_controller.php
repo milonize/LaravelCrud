@@ -37,7 +37,6 @@ class crud_controller extends Controller
         $user = new crud_opatration;
         $user->images = $imageName;
         $user->name = $request->name;
-        $user->phone = '03242374';
         $user->address = $request->address;
         // and save ==================
         $user->save();
