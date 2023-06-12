@@ -11,8 +11,8 @@ class crud_controller extends Controller
 {
     public function index()
     {
-        $user=crud_opatration::get();
-        return view("index",['user'=>$user]);
+        $user = crud_opatration::get();
+        return view("index", ['user' => $user]);
     }
 
     public function create()
@@ -24,11 +24,15 @@ class crud_controller extends Controller
     {
         // form data validate ==============
         $request->validate([
-            'name'=>'required',
-            'address'=>'required',
-            'images'=>'required|image:jpeg,jpg,png,gif'
+            'name' => 'required',
+            'address' => 'required',
+            'images' => 'required|image:jpeg,jpg,png,gif'
         ]);
-
+        $checkaddress = crud_opatration::where('address', $request->address)->first();
+        if (isset($checkaddress)) {
+            return back()->with('error', 'This email address has already used');
+        } else {
+        }
         // form image data validate =========
         $imageName = time() . '.' . $request->images->extension();
         $request->images->move(public_path('images'), $imageName);
@@ -43,42 +47,42 @@ class crud_controller extends Controller
         return back()->withSuccess("New user data was added!");
     }
 
-    public function edit($id){
-        $edit=crud_opatration::where('id',$id)->first();
-return view("edit",['edited_user'=>$edit]);
-
+    public function edit($id)
+    {
+        $edit = crud_opatration::where('id', $id)->first();
+        return view("edit", ['edited_user' => $edit]);
     }
 
-    public function update(Request $request,$id){
- // form data validate ==============
+    public function update(Request $request, $id)
+    {
+        // form data validate ==============
 
- $request->validate([
-    'name'=>'required',
-    'address'=>'required',
-    'images'=>'nullable|image:jpeg,jpg,png,gif'
-]);
-$user= crud_opatration::where('id',$id)->first();
-if(isset($request->images)){
-// form image data validate =========
-$imageName = time() . '.' . $request->images->extension();
-$request->images->move(public_path('images'), $imageName);
-$user->images = $imageName;
-}
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'images' => 'nullable|image:jpeg,jpg,png,gif'
+        ]);
+        $user = crud_opatration::where('id', $id)->first();
+        if (isset($request->images)) {
+            // form image data validate =========
+            $imageName = time() . '.' . $request->images->extension();
+            $request->images->move(public_path('images'), $imageName);
+            $user->images = $imageName;
+        }
 
-// make object ==============
+        // make object ==============
 
-$user->name = $request->name;
-$user->phone = '03242374';
-$user->address = $request->address;
-// and save ==================
-$user->save();
-return back()->withSuccess("New user data was updated!");
+        $user->name = $request->name;
+        $user->address = $request->address;
+        // and save ==================
+        $user->save();
+        return back()->withSuccess("New user data was updated!");
     }
 
-    public function delete($id){
-$deletedUser= crud_opatration::where('id',$id)->first();
-$deletedUser->delete();
-return back()->withSuccess("New user data was deleted!");
-
+    public function delete($id)
+    {
+        $deletedUser = crud_opatration::where('id', $id)->first();
+        $deletedUser->delete();
+        return back()->withSuccess("New user data was deleted!");
     }
 }

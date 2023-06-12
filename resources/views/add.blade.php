@@ -31,6 +31,11 @@
 
 
 @endif
+@if($alert=Session::get("error"))
+<p class="text-danger">{{$alert}}</p>
+
+
+@endif
                 <form action="{{route('user.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <table class="table table-dark table-striped">
