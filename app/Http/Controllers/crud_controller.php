@@ -36,19 +36,18 @@ class crud_controller extends Controller
         } else {
             //if address already not set out database then continue....
             // form image data validate =========
-        $imageName = time() . '.' . $request->images->extension();
-        $request->images->move(public_path('images'), $imageName);
+            $imageName = time() . '.' . $request->images->extension();
+            $request->images->move(public_path('images'), $imageName);
 
-        // make object ==============
-        $user = new crud_opatration;
-        $user->images = $imageName;
-        $user->name = $request->name;
-        $user->address = $request->address;
-        // and save ==================
-        $user->save();
-        return back()->withSuccess("New user data was added!");
+            // make object ==============
+            $user = new crud_opatration;
+            $user->images = $imageName;
+            $user->name = $request->name;
+            $user->address = $request->address;
+            // and save ==================
+            $user->save();
+            return back()->withSuccess("New user data was added!");
         }
-
     }
 
     public function edit($id)
